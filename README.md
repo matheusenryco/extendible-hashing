@@ -1,4 +1,4 @@
-##Implementação completa de Hashing Extensível
+# Implementação completa de Hashing Extensível
 
 Este projeto faz parte como trabalho da disciplina de **Organização e Recuperação de Dados**, do curso de **Engenharia de Software** da **Universidade Estadual de Maringá**, em Maringá, Paraná, Brasil.
 
@@ -40,12 +40,12 @@ A execução do arquivo de operações será acionada pela linha de comando, no 
 #### Formato do arquivo de operações    
 O arquivo de operações terá um comando por linha, consistindo em um caractere identificador da operação seguido
 de um espaço e a chave (um número inteiro).
-    * **i <chave>**: Insere a chave no hashing. Não será permitida a inserção de chaves duplicadas.
-    * **b <chave>**: Busca pela chave, informando se foi encontrada e em qual bucket ela está.
-    * **r <chave>**: Remove a chave do hashing.
+- **i <chave>**: Insere a chave no hashing. Não será permitida a inserção de chaves duplicadas.
+- **b <chave>**: Busca pela chave, informando se foi encontrada e em qual bucket ela está.
+- **r <chave>**: Remove a chave do hashing.
 
 A seguir é exemplificado o formato de um arquivo de operações.
-```txt 
+```txt
 i 20
 i 4
 i 12
@@ -59,23 +59,63 @@ r 99
 Com base no arquivo de operações mostrado acima, o programa deverá apresentar a seguinte saída:
 
 ```txt 
-Inserção da chave 20: Sucesso. 
-Inserção da chave 4: Sucesso.
-Inserção da chave 12: Sucesso. 
-Inserção da chave 20: Falha – Chave duplicada.
-Busca pela chave 12: Chave encontrada no bucket 2.
-Remoção da chave 4: Sucesso.
-Busca pela chave 4: Chave não encontrada.
-Remoção da chave 99: Falha – Chave não encontrada.
+> Inserção da chave 20: Sucesso. 
+> Inserção da chave 4: Sucesso.
+> Inserção da chave 12: Sucesso. 
+> Inserção da chave 20: Falha – Chave duplicada.
+> Busca pela chave 12: Chave encontrada no bucket 2.
+> Remoção da chave 4: Sucesso.
+> Busca pela chave 4: Chave não encontrada.
+> Remoção da chave 99: Falha – Chave não encontrada.
 ```
 
 #### 2. Impressão do diretório (`-pd`)
 Essa funcionalidade exibe o estado atual do diretório. A impressão do diretório também será acessada via linha de comando, no seguinte formato:
 
-**Python complete_hash.py -pd**
+```txt
+$ python complete_hash.py -pd
+```
 
-Sempre que ativada, essa funcionalidade apresentará na tela o conteúdo de todas as células do diretório, além das seguintes informações: (a) profundidade; (b) tamanho atual; e (c) número total de buckets referenciados.
+Como exemplo, o programa deverá apresentar as seguintes informações sobre o diretório:
+```txt
+----- Diretório -----
+dir[0] = bucket(0)
+dir[1] = bucket(0)
+dir[2] = bucket(1)
+dir[3] = bucket(2)
+
+Profundidade = 2
+Tamanho atual = 4
+Total de buckets = 3
+```
+
+Sempre que ativada, essa funcionalidade apresentará na tela o conteúdo de todas as células do diretório, além das seguintes informações: 
+- (a) profundidade
+- (b) tamanho atual
+- (c) número total de buckets referenciados.
 
 ### 3. Impressão dos buckets (`-pb`)
 Essa funcionalidade exibe o conteúdo dos buckets ativos no arquivo buckets.dat. Ela também será acessada via linha de comando, no seguinte formato:
-**Python complete_hash.py -pb**
+
+```txt
+$ python complete_hash.py -pb
+```
+Como exemplo, considere o hashing extensível mostrado anteriormente, supondo que o bucket de RRN = 4 tenha
+sido removido. Nesse caso, seu programa deverá apresentar as seguintes informações sobre os buckets:
+
+```txt
+----- Buckets -----
+Bucket 0 (Prof = 1):
+Conta_chaves = 2
+Chaves = [2, 4]
+
+Bucket 1 (Prof = 2):
+Conta_chaves = 2
+Chaves = [1, 5]
+
+Bucket 2 (Prof = 2):
+Conta_chaves = 2
+Chaves = [3, -1]
+
+Bucket 4 -- Removido
+```
