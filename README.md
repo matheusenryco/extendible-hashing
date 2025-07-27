@@ -1,6 +1,6 @@
 # Complete Extendible Hashing Implementation
 
-This project is part of the coursework for the **Data Organization and Retrieval** discipline, from the **Software Engineering** program at **State University of Maringá**, in Maringá, Paraná, Brazil.
+This project is part of the coursework for the **Data Organization and Recovery** discipline, from the **Software Engineering** program at **State University of Maringá**, in Maringá, Paraná, Brazil.
 
 The project implements a complete Extendible Hashing system with the following functionalities:
 
@@ -16,7 +16,7 @@ The project implements a complete Extendible Hashing system with the following f
 
     * **Bucket Merging:** After key removal, the system attempts to merge "buddy buckets" (bucket pairs) if the combined number of keys does not exceed maximum capacity.
 
-    * **Directory Shrinking:** After a successful merge, the system checks if the directory can be halved, decreasing the global depth.
+    * **Directory Degree:** After a successful merge, the system checks if the directory can be halved, decreasing the global depth.
 
 * **Management and Interface**
     * **Initialization and Management:** The system can create a new structure from scratch or load an existing one. All changes are saved at the end of execution to binary files.
