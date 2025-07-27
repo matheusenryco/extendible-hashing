@@ -45,26 +45,11 @@ de um espaço e a chave (um número inteiro).
     * r <chave>: Remove a chave do hashing.
 
 A seguir é exemplificado o formato de um arquivo de operações.
-
-i 20
-i 4
-i 12
-i 20
-b 12
-r 4
-b 4
-r 99
+<pre> ```txt i 20 i 4 i 12 i 20 b 12 r 4 b 4 r 99 ``` </pre>
 
 Com base no arquivo de operações mostrado acima, o programa deverá apresentar a seguinte saída:
 
-> Inserção da chave 20: Sucesso.
-> Inserção da chave 4: Sucesso.
-> Inserção da chave 12: Sucesso.
-> Inserção da chave 20: Falha – Chave duplicada.
-> Busca pela chave 12: Chave encontrada no bucket 2.
-> Remoção da chave 4: Sucesso.
-> Busca pela chave 4: Chave não encontrada.
-> Remoção da chave 99: Falha – Chave não encontrada.
+<pre> ``` Inserção da chave 20: Sucesso. Inserção da chave 4: Sucesso. Inserção da chave 12: Sucesso. Inserção da chave 20: Falha – Chave duplicada. Busca pela chave 12: Chave encontrada no bucket 2. Remoção da chave 4: Sucesso. Busca pela chave 4: Chave não encontrada. Remoção da chave 99: Falha – Chave não encontrada. ``` </pre>
 
 #### 2. Impressão do diretório (`-pd`)
 Essa funcionalidade exibe o estado atual do diretório. A impressão do diretório também será acessada via linha de comando, no seguinte formato:
