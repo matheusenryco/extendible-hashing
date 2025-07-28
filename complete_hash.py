@@ -3,7 +3,7 @@ import struct
 import os
 import sys
 
-MAX_BUCKET_SIZE = 5
+MAX_BUCKET_SIZE = 2 # Global variable to test changing the maximum size of bucket
 
 def generate_address(key, depth):
     ''' 
@@ -475,10 +475,6 @@ def print_buckets(self):
             print(f"Keys = {keys_to_show}")
             print()
 
-# ==============================================================================
-# MAIN EXECUTION BLOCK
-# ==============================================================================
-
 if __name__ == "__main__":
     operation_file = None
     print_directory_flag = False
@@ -548,7 +544,5 @@ if __name__ == "__main__":
                 print()  # Blank line to separate
                 print_buckets(hashing)
 
-        except FileNotFoundError:
-            print(f"Error: Operation file '{operation_file}' not found.")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
