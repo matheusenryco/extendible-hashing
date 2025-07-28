@@ -33,8 +33,9 @@ The program is controlled via command line, using flags to trigger different fun
 This is the main functionality of the program. It processes a text file containing a sequence of insertion, search, and removal operations.
 
 The operations file execution will be triggered by the command line, in the following format:
-
-**python complete_hash.py -e operations_file.txt**
+```txt
+**$ python complete_hash.py -e operations_file.txt**
+```
 
 #### Operations file format    
 The operations file will have one command per line, consisting of an operation identifier character followed by a space and the key (an integer).
