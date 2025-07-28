@@ -3,7 +3,7 @@ import struct
 import os
 import sys
 
-MAX_BUCKET_SIZE = 5
+MAX_BUCKET_SIZE = 2 # Global variable to test changing the maximum size of bucket
 
 def generate_address(key, depth):
     ''' 
@@ -296,7 +296,7 @@ def try_merge_buckets(self, ref_bk, bucket):
                 self.directory.refs[i] = ref_bk
         
         # After concatenation, check if the directory can shrink in size
-        if try_shrink_directory(self):
+        if try_decrease_dir(self):
             # If the directory shrinks, a new buddy may have appeared
             try_merge_buckets(self, ref_bk, bucket)
 
@@ -384,45 +384,35 @@ def merge_buckets(self, ref_bk, bucket, buddy_ref, buddy_bucket):
     # Return bucket
     return bucket
 
-def try_shrink_directory(self):
+def try_decrease_dir(self):
     """
-    Tries to shrink directory size if possible.
-    Returns True if shrunk, False otherwise.
+    Tries to decreases the directory size if possible.
+    Returns True if it diminished, False otherwise.
     """
-    # If dir_depth equals 0, then return False
+    
     if self.directory.dir_depth == 0:
         return False
     
     # Set dir_size to 2 ^ dir_depth
     dir_size = 2 ** self.directory.dir_depth
-    
-    # Set shrink to True (assume it's possible and try to prove otherwise)
-    shrink = True
-    
-    # For i = 0 to dir_size - 1 with step 2
+    decrease = True
+
     for i in range(0, dir_size, 2):
-        # If directory.refs[i] != directory.refs[i+1] then
         if self.directory.refs[i] != self.directory.refs[i + 1]:
-            # Set shrink to False
-            shrink = False
-            # Break the loop
+            decrease = False
             break
     
-    # If shrink then:
-    if shrink:
-        # Create a list new_refs
+    if decrease:
         new_refs = []
         
-        # For each two references from current refs, insert one in new_refs
         for i in range(0, dir_size, 2):
             new_refs.append(self.directory.refs[i])
         
-        # Set directory.refs to new_refs
         self.directory.refs = new_refs
         
         # Decrement dir_depth
         self.directory.dir_depth -= 1
-    return shrink
+    return decrease
 
 def print_directory(self):
     """Prints the current directory state."""
@@ -474,10 +464,6 @@ def print_buckets(self):
                 
             print(f"Keys = {keys_to_show}")
             print()
-
-# ==============================================================================
-# MAIN EXECUTION BLOCK
-# ==============================================================================
 
 if __name__ == "__main__":
     operation_file = None
@@ -548,7 +534,5 @@ if __name__ == "__main__":
                 print()  # Blank line to separate
                 print_buckets(hashing)
 
-        except FileNotFoundError:
-            print(f"Error: Operation file '{operation_file}' not found.")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
