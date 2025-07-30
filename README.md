@@ -1,4 +1,4 @@
-##Complete Extendible Hashing Implementation
+## Complete Extendible Hashing Implementation
 
 This project is part of the coursework for the **Data Organization and Recuperation** discipline, from the **Software Engineering** program at **State University of Maringá**, in Maringá, Paraná, Brazil.
 
