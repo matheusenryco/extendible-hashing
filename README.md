@@ -1,8 +1,8 @@
-##Implementação completa de Hashing Extensível
+##Complete Extendible Hashing Implementation
 
-Este projeto faz parte como trabalho da disciplina de **Organização e Recuperação de Dados**, do curso de **Engenharia de Software** da **Universidade Estadual de Maringá**, em Maringá, Paraná, Brasil.
+This project is part of the coursework for the **Data Organization and Recuperation** discipline, from the **Software Engineering** program at **State University of Maringá**, in Maringá, Paraná, Brazil.
 
-O projeto implementa um sistema de Hashing Extensível completo, com as seguintes funcionalidades:
+The project implements a complete Extendible Hashing system with the following functionalities:
 
 * **Key Manipulation Operations**
     * **Insertion:** Adds new keys to the structure, with handling to prevent duplicate key insertion.
@@ -16,7 +16,7 @@ O projeto implementa um sistema de Hashing Extensível completo, com as seguinte
 
     * **Bucket Merging:** After key removal, the system attempts to merge "buddy buckets" (bucket pairs) if the combined number of keys does not exceed maximum capacity.
 
-    * **Redução de Diretório:** Após uma fusão bem-sucedida, o sistema verifica se o diretório pode ser reduzido pela metade, diminuindo a profundidade global.
+    * **Directory Reduction:** After a successful merge, the system checks if the directory can be reduced by half, decreasing the global depth.
 
 * **Management and Interface**
     * **Initialization and Management:** The system can create a new structure from scratch or load an existing one. All changes are saved at the end of execution to binary files.
@@ -29,13 +29,12 @@ O projeto implementa um sistema de Hashing Extensível completo, com as seguinte
 
 The program is controlled via command line, using flags to trigger different functionalities.
 
-#### 1. Execução de operações (`-e`)
-Esta é a principal funcionalidade do programa. Ela processa um arquivo de texto que contém uma sequência de
-operações de inserção, busca e remoção.
+#### 1. Operations execution (`-e`)
+This is the main functionality of the program. It processes a text file containing a sequence of insertion, search, and removal operations.
 
-A execução do arquivo de operações será acionada pela linha de comando, no seguinte formato:
+Operation file execution is triggered via command line, in the following format:
 
-**Python complete_hash.py -e arquivo operacoes.txt**
+**python complete_hash.py -e operations_file.txt**
 
 #### Operations file format    
 The operations file will have one command per line, consisting of an operation identifier character followed by a space and the key (an integer).
@@ -66,6 +65,8 @@ Based on the operations file shown above, the program should present the followi
 > Key 4 removal: Success.
 > Search for key 4: Key not found.
 > Key 99 removal: Failed – Key not found.
+
+Operations from file operations_file.txt were executed successfully!
 ```
 
 #### 2. Directory printing (`-pd`)
@@ -93,15 +94,30 @@ Whenever activated, this functionality will display on screen the content of all
 - (b) current size
 - (c) total number of referenced buckets.
 
-### 3. Impressão dos buckets (`-pb`)
-Essa funcionalidade exibe o conteúdo dos buckets ativos no arquivo buckets.dat. Ela também será acessada via linha de comando, no seguinte formato:
-**Python complete_hash.py -pb**
+### 3. Bucket printing (`-pb`)
+This functionality displays the content of active buckets in the buckets.dat file. It is also accessed via command line, in the following format:
+
+**python complete_hash.py -pb**
+
+As an example, the program should present the following information about the buckets:
+```txt
+---- Buckets ----
+Bucket 0 (Depth = 1):
+Key_count: 1
+Keys = [12, -1]
+
+Bucket 1 (Depth = 2):
+Key_count: 1
+Keys = [20, -1]
+
+Bucket 2 -- Removed
+```
 
 ### DISCLAIMER
-When changing the TAM_MAX_BUCKET global variable, you must delete the **diretorio.dat*** and ***buckets.dat files***. Afterwards, the hashing structure must be recreated by running the program with an operations file, for example: 
+When changing the MAX_BUCKET_SIZE global variable, you must delete the **directory.dat** and **buckets.dat** files. Afterwards, the hashing structure must be recreated by running the program with an operations file, for example: 
 
 ```txt
-python complete_hash.py -e op60.txt. 
+python complete_hash.py -e op60.txt
 ```
 
 This ensures the correct functionality of all operations, including the diagnostic flags (-pd and -pb).
