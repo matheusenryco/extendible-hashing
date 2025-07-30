@@ -41,7 +41,7 @@ class ExtendibleHashing:
                 f_bk.write(struct.pack("<i", empty_bucket.depth))
                 f_bk.write(struct.pack("<i", empty_bucket.count))
                 for _ in range(MAX_BUCKET_SIZE):
-                    f_bk.write(struct.pack("<i", 0))  # 0 represents empty slot
+                    f_bk.write(struct.pack("<i", -1))  # -1 represents empty slot
             
             # assigns bucket RRN (0) to directory
             directory.refs = [0]  # First bucket has RRN = 0
