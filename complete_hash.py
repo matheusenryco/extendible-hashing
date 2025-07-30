@@ -524,6 +524,8 @@ if __name__ == "__main__":
             # Finalize by saving state
             finalize_hash(hashing, hashing.directory)
             
+            print(f"\nOperations from file {operation_file} were executed successfully!")
+            
             if print_directory_flag:
                 print()  # Blank line to separate
                 print_directory(hashing)
