@@ -118,3 +118,12 @@ Keys = [3, 0]
 
 Bucket 4 -- Removed
 ```
+
+#### DISCLAIMER
+When changing the TAM_MAX_BUCKET global variable, you must delete the **diretorio.dat*** and ***buckets.dat files***. Afterwards, the hashing structure must be recreated by running the program with an operations file, for example: 
+
+```txt
+python complete_hash.py -e op60.txt. 
+```
+
+This ensures the correct functionality of all operations, including the diagnostic flags (-pd and -pb).
