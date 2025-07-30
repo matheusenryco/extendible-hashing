@@ -1,8 +1,8 @@
-# Complete Extendible Hashing Implementation
+##Implementação completa de Hashing Extensível
 
-This project is part of the coursework for the **Data Organization and Retrieval** discipline, from the **Software Engineering** program at **State University of Maringá**, in Maringá, Paraná, Brazil.
+Este projeto faz parte como trabalho da disciplina de **Organização e Recuperação de Dados**, do curso de **Engenharia de Software** da **Universidade Estadual de Maringá**, em Maringá, Paraná, Brasil.
 
-The project implements a complete Extendible Hashing system with the following functionalities:
+O projeto implementa um sistema de Hashing Extensível completo, com as seguintes funcionalidades:
 
 * **Key Manipulation Operations**
     * **Insertion:** Adds new keys to the structure, with handling to prevent duplicate key insertion.
@@ -16,7 +16,7 @@ The project implements a complete Extendible Hashing system with the following f
 
     * **Bucket Merging:** After key removal, the system attempts to merge "buddy buckets" (bucket pairs) if the combined number of keys does not exceed maximum capacity.
 
-    * **Directory Shrinking:** After a successful merge, the system checks if the directory can be halved, decreasing the global depth.
+    * **Redução de Diretório:** Após uma fusão bem-sucedida, o sistema verifica se o diretório pode ser reduzido pela metade, diminuindo a profundidade global.
 
 * **Management and Interface**
     * **Initialization and Management:** The system can create a new structure from scratch or load an existing one. All changes are saved at the end of execution to binary files.
@@ -29,12 +29,13 @@ The project implements a complete Extendible Hashing system with the following f
 
 The program is controlled via command line, using flags to trigger different functionalities.
 
-#### 1. Operations execution (`-e`)
-This is the main functionality of the program. It processes a text file containing a sequence of insertion, search, and removal operations.
+#### 1. Execução de operações (`-e`)
+Esta é a principal funcionalidade do programa. Ela processa um arquivo de texto que contém uma sequência de
+operações de inserção, busca e remoção.
 
-The operations file execution will be triggered by the command line, in the following format:
+A execução do arquivo de operações será acionada pela linha de comando, no seguinte formato:
 
-**python complete_hash.py -e operations_file.txt**
+**Python complete_hash.py -e arquivo operacoes.txt**
 
 #### Operations file format    
 The operations file will have one command per line, consisting of an operation identifier character followed by a space and the key (an integer).
@@ -92,28 +93,15 @@ Whenever activated, this functionality will display on screen the content of all
 - (b) current size
 - (c) total number of referenced buckets.
 
-### 3. Bucket printing (`-pb`)
-This functionality displays the content of active buckets in the buckets.dat file. It is also accessed via command line, in the following format:
+### 3. Impressão dos buckets (`-pb`)
+Essa funcionalidade exibe o conteúdo dos buckets ativos no arquivo buckets.dat. Ela também será acessada via linha de comando, no seguinte formato:
+**Python complete_hash.py -pb**
+
+### DISCLAIMER
+When changing the TAM_MAX_BUCKET global variable, you must delete the **diretorio.dat*** and ***buckets.dat files***. Afterwards, the hashing structure must be recreated by running the program with an operations file, for example: 
 
 ```txt
-$ python complete_hash.py -pb
+python complete_hash.py -e op60.txt. 
 ```
 
-As an example, consider the extendible hashing shown previously, assuming that the bucket with RRN = 4 has been removed. In this case, your program should present the following information about the buckets:
-
-```txt
------ Buckets -----
-Bucket 0 (Depth = 1):
-Key_count = 2
-Keys = [2, 4]
-
-Bucket 1 (Depth = 2):
-Key_count = 2
-Keys = [1, 5]
-
-Bucket 2 (Depth = 2):
-Key_count = 1
-Keys = [3, 0]
-
-Bucket 4 -- Removed
-```
+This ensures the correct functionality of all operations, including the diagnostic flags (-pd and -pb).
