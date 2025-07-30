@@ -43,7 +43,6 @@ class ExtendibleHashing:
         self.bucket_file = bucket_file
         self.dir_file = dir_file
 
-## pseudocode slide 07 ##
     def initialize_extendible_hashing(self):
         # if hashing exists:
         if os.path.exists(self.dir_file) and os.path.exists(self.bucket_file):  # checks if files exist
@@ -77,7 +76,7 @@ class ExtendibleHashing:
                 f_bk.write(struct.pack("<i", empty_bucket.depth))
                 f_bk.write(struct.pack("<i", empty_bucket.count))
                 for _ in range(MAX_BUCKET_SIZE):
-                    f_bk.write(struct.pack("<i", 0))  # 0 represents empty slot
+                    f_bk.write(struct.pack("<i", -1))  # -1 represents empty slot
             
             # assigns bucket RRN (0) to directory
             directory.refs = [0]  # First bucket has RRN = 0
@@ -203,7 +202,7 @@ def write_bucket_file(self, ref_bk, bucket):
             if i < len(bucket.keys):
                 f.write(struct.pack("<i", bucket.keys[i]))
             else:
-                f.write(struct.pack("<i", 0))  # empty slot
+                f.write(struct.pack("<i", -1))  # -1 represents empty slot
 
 def insert_operation(self, key):
     """
@@ -222,7 +221,6 @@ def insert_operation(self, key):
     return True
 
 def find_new_interval(self, bucket):
-    # pseudocode slide 13
     mask = 1
     key = bucket.keys[0]
     common_address = generate_address(key, bucket.depth)
@@ -296,7 +294,7 @@ def try_merge_buckets(self, ref_bk, bucket):
                 self.directory.refs[i] = ref_bk
         
         # After concatenation, check if the directory can shrink in size
-        if try_shrink_directory(self):
+        if try_decrease_dir(self):
             # If the directory shrinks, a new buddy may have appeared
             try_merge_buckets(self, ref_bk, bucket)
 
@@ -348,7 +346,7 @@ def read_bucket_file(self, ref_bk):
         
         for i in range(MAX_BUCKET_SIZE):
             key = struct.unpack("<i", f.read(4))[0]
-            if key != 0:  # Only 0 indicates empty slot
+            if key != -1:  # -1 indicates empty slot
                 bucket.keys.append(key)
         return bucket
 
@@ -384,45 +382,35 @@ def merge_buckets(self, ref_bk, bucket, buddy_ref, buddy_bucket):
     # Return bucket
     return bucket
 
-def try_shrink_directory(self):
+def try_decrease_dir(self):
     """
-    Tries to shrink directory size if possible.
-    Returns True if shrunk, False otherwise.
+    Tries to decreases the directory size if possible.
+    Returns True if it diminished, False otherwise.
     """
-    # If dir_depth equals 0, then return False
+    
     if self.directory.dir_depth == 0:
         return False
     
     # Set dir_size to 2 ^ dir_depth
     dir_size = 2 ** self.directory.dir_depth
-    
-    # Set shrink to True (assume it's possible and try to prove otherwise)
-    shrink = True
-    
-    # For i = 0 to dir_size - 1 with step 2
+    decrease = True
+
     for i in range(0, dir_size, 2):
-        # If directory.refs[i] != directory.refs[i+1] then
         if self.directory.refs[i] != self.directory.refs[i + 1]:
-            # Set shrink to False
-            shrink = False
-            # Break the loop
+            decrease = False
             break
     
-    # If shrink then:
-    if shrink:
-        # Create a list new_refs
+    if decrease:
         new_refs = []
         
-        # For each two references from current refs, insert one in new_refs
         for i in range(0, dir_size, 2):
             new_refs.append(self.directory.refs[i])
         
-        # Set directory.refs to new_refs
         self.directory.refs = new_refs
         
         # Decrement dir_depth
         self.directory.dir_depth -= 1
-    return shrink
+    return decrease
 
 def print_directory(self):
     """Prints the current directory state."""
@@ -467,10 +455,10 @@ def print_buckets(self):
             print(f"Bucket {rrn} (Depth = {bucket.depth}):")
             print(f"Key_count: {bucket.count}")
             
-            # Fill keys with 0 until completing MAX_BUCKET_SIZE
+            # Fill keys with -1 until completing MAX_BUCKET_SIZE
             keys_to_show = bucket.keys[:]
             for _ in range(MAX_BUCKET_SIZE - len(keys_to_show)):
-                keys_to_show.append(0)
+                keys_to_show.append(-1)
                 
             print(f"Keys = {keys_to_show}")
             print()
