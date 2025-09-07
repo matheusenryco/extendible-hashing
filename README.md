@@ -34,7 +34,9 @@ This is the main functionality of the program. It processes a text file containi
 
 Operation file execution is triggered via command line, in the following format:
 
-**python complete_hash.py -e operations_file.txt**
+```txt
+python complete_hash.py -e operations_file.txt
+```
 
 #### Operations file format    
 The operations file will have one command per line, consisting of an operation identifier character followed by a space and the key (an integer).
